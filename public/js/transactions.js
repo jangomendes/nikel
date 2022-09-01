@@ -1,14 +1,17 @@
 const myModal = new bootstrap.Modal("#transaction-modal");
 let logged = sessionStorage.getItem("logged");
 const session = localStorage.getItem("session");
-
 let data = {
     transactions: []
 };
 
 document.getElementById("button-logout").addEventListener("click", logout);
 
+
+
+
 //ADICIONAR LANÇAMENTO
+
 document.getElementById("transaction-form").addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -27,14 +30,18 @@ document.getElementById("transaction-form").addEventListener("submit", function(
 
     getTransactions();
 
-    alert("Lançamento adicionado com sucesso");
+    alert("Lançamento adicionado com sucesso.");
+
 
 });
 
+
 checkLogged();
 
+
+
 function checkLogged() {
-    if(session) {
+    if(session) { 
         sessionStorage.setItem("logged", session);
         logged = session;
     }
@@ -50,6 +57,7 @@ function checkLogged() {
     }
 
     getTransactions();
+
 }
 
 
@@ -57,11 +65,12 @@ function logout() {
     sessionStorage.removeItem("logged");
     localStorage.removeItem("session");
 
-    window.location.href ="index.html";
+    window.location.href = "index.html";
 }
 
+
 function getTransactions() {
-    const transactions = data.transactions; 
+    const transactions = data.transactions;
     let transactionsHtml = ``;
 
     if(transactions.length) {
@@ -72,19 +81,20 @@ function getTransactions() {
                 type = "Saída";
             }
 
-            transactionsHtml +=`
-            <tr>
-                <th scope="row">${item.date}</th>
-                 <td>${item.value.toFixed(2)}</td>
-                 <td>${type}</td>
-                <td>${item.description}</td>
-            </tr>
+            transactionsHtml += `
+                <tr>
+                    <th scope="row">${item.date}</th>
+                    <td>${item.value.toFixed(2)}</td>
+                    <td>${type}</td>
+                    <td>${item.description}</td>
+                </tr>
             `
         })
     }
 
     document.getElementById("transactions-list").innerHTML = transactionsHtml;
 }
+
 
 function saveData(data) {
     localStorage.setItem(data.login, JSON.stringify(data));
